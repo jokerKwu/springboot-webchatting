@@ -38,7 +38,7 @@ var main = {
             title: $('#title').val(),
             content: $('#content').val()
         };
-
+        alert(id);
         var id = $('#id').val();
 
         $.ajax({
