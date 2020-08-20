@@ -121,7 +121,7 @@ public class ChatService {
 
     private String getDestination(String chatRoomId) {
         System.out.println("겟데스티네이션에 도착 ");
-        return "/chat/" + chatRoomId;
+        return "/topic/chat/" + chatRoomId;
     }
 
     private void setJoinResult(DeferredResult<ChatResponse> result, ChatResponse response) {
