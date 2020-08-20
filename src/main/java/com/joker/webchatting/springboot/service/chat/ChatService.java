@@ -100,6 +100,10 @@ public class ChatService {
 
     public void sendMessage(String chatRoomId, ChatMessage chatMessage) {
         String destination = getDestination(chatRoomId);
+        System.out.println("ChatService 도척 " + chatMessage);
+
+        System.out.println("ChatService 도척 " + destination);
+
         messagingTemplate.convertAndSend(destination, chatMessage);
     }
 
@@ -116,7 +120,8 @@ public class ChatService {
     }
 
     private String getDestination(String chatRoomId) {
-        return "/topic/chat/" + chatRoomId;
+        System.out.println("겟데스티네이션에 도착 ");
+        return "/chat/" + chatRoomId;
     }
 
     private void setJoinResult(DeferredResult<ChatResponse> result, ChatResponse response) {

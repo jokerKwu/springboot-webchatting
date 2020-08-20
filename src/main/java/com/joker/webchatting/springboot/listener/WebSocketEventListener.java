@@ -37,6 +37,7 @@ public class WebSocketEventListener {
         String chatRoomId = headerAccessor.getNativeHeader("chatRoomId").get(0);
         String sessionId = headerAccessor.getSessionId();*/
 
+        System.out.println("[Connected] room id : "+chatRoomId +" | websocket session id : " + sessionId);
         logger.info("[Connected] room id : {} | websocket session id : {}", chatRoomId, sessionId);
 
         chatService.connectUser(chatRoomId, sessionId);

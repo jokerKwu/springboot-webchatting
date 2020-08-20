@@ -68,6 +68,7 @@ public class ChatController {
 
         if (chatMessage.getMessageType() == MessageType.CHAT) {
             chatService.sendMessage(chatRoomId, chatMessage);
+            System.out.println("ChatController 메시지 도착 : " + chatMessage);
         }
     }
     // -- tag :: websocket stomp
