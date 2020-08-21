@@ -1,17 +1,18 @@
 {{>layout/header}}
-
+<h2> 웹 서비스 </h2>
 <div class="col-md-12">
     <div class="row">
         <div class="col-md-6">
-            <a href="/posts/save" role="button" class="btn btn-primary">글 등록</a>
+
             {{#name}}
-                Logged in as: <span id="user">{{name}}</span>
-                <a href="/logout" class="btn btn-info active" role="button">Logout</a>
-                <a href="/chat" class="btn btn-primary">채팅방 입장</a>
+                <span id="user">{{name}}</span>  접속 중
+                <a href="/posts/save" role="button" class="btn btn-outline-primary">글 등록</a>
+                <a href="/chat" class="btn btn-outline-primary">채팅방 입장</a>
+                <a href="/logout" class="btn btn-outline-danger" role="button">로그아웃</a>
             {{/name}}
             {{^name}}
-                <a href="/oauth2/authorization/google" class="btn btn-success active" role="button">Google Login</a>
-                <a href="/oauth2/authorization/naver" class="btn btn-secondary active" role="button">Naver Login</a>
+                <a href="/oauth2/authorization/google" class="btn btn-outline-primary" role="button">구글 로그인</a>
+                <a href="/oauth2/authorization/naver" class="btn btn-outline-primary" role="button">네이버 로그인</a>
             {{/name}}
         </div>
     </div>
