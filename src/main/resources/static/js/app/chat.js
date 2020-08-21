@@ -1,4 +1,8 @@
+
 $(function () {
+
+
+
     var ChatManager = (function () {
         function ChatManager() {
         }
@@ -179,3 +183,4 @@ $(function () {
 
     ChatManager.updateTemplate('wait');
 });
+
