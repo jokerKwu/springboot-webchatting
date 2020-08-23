@@ -27,6 +27,7 @@ deploy:
     access_key_id: $AWS_ACCESS_KEY
     secret_access_key: $AWS_SECRET_KEY
     bucket: joker-springboot-build
+    region: ap-northeast-2
     skip_cleanup: true
     acl: private
     local_dir: deploy
@@ -43,7 +44,6 @@ deploy:
     region: ap-northeast-2
     wait-until-deployed: true
 
-    deployme
 
 # CI 실행 완료시 메일로 알람
 notification:
