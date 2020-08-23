@@ -31,12 +31,12 @@ deploy:
     acl: private
     local_dir: deploy
     wait-until-deployed: true
+
   - provider: codedeploy
     access_key_id: $AWS_ACCESS_KEY
     secret_access_key: $AWS_SECRET_KEY
     bucket: joker-springboot-build
-    key: joker-springboot-webchatting.zip
-
+    key: springboot-webchatting.zip
     bundle_type: zip
     application: springboot-webchatting
     deployment_group: springboot-webchatting-group
