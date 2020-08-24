@@ -39,7 +39,7 @@ deploy:
     bucket: joker-springboot-build
     key: springboot-webchatting.zip
     bundle_type: zip
-    application: springboot-webchatting
+    application: joker-springboot-webchatting
     deployment_group: springboot-webchatting-group
     region: ap-northeast-2
     wait-until-deployed: true
