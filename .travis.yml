@@ -26,24 +26,14 @@ deploy:
   - provider: s3
     access_key_id: $AWS_ACCESS_KEY
     secret_access_key: $AWS_SECRET_KEY
-    bucket: joker-springboot-build
+    bucket: springboot-webchatting-deploy
     region: ap-northeast-2
     skip_cleanup: true
-    acl: private
-    local_dir: deploy
+    acl: public_read
     wait-until-deployed: true
-
-  - provider: codedeploy
-    access_key_id: $AWS_ACCESS_KEY
-    secret_access_key: $AWS_SECRET_KEY
-    bucket: joker-springboot-build
-    key: springboot-webchatting.zip
-    bundle_type: zip
-    application: springboot-webchatting
-    deployment_group: springboot-webchatting-group
-    region: ap-northeast-2
-    wait-until-deployed: true
-
+    on:
+      repo: jokerKwu/springboot-webchatting
+      branch: master
 
 # CI 실행 완료시 메일로 알람
 notification:
