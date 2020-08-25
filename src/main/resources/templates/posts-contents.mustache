@@ -25,11 +25,12 @@
         <a href="/" role="button" class="btn btn-outline-danger">취소</a>
         {{#same}}
             <a href="/posts/update/{{id}}" role="button" class="btn btn-outline-primary" id="btn_update">수정</a>
+            <button type="button" class="btn btn-outline-danger" id="btn-delete">삭제</button>
         {{/same}}
         {{^same}}
             <button type="button" class="btn btn-outline-primary" id="btn-update" disabled>수정</button>
+            <button type="button" class="btn btn-outline-danger" id="btn-delete" disabled>삭제</button>
         {{/same}}
-        <button type="button" class="btn btn-outline-danger" id="btn-delete">삭제</button>
     </div>
 </div>
 
