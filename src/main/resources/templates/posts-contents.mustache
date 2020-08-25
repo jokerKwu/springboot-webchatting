@@ -24,7 +24,7 @@
         </form>
         <a href="/" role="button" class="btn btn-outline-danger">취소</a>
         {{#same}}
-            <button type="button" class="btn btn-outline-primary" id="btn-update">수정</button>
+            <a href="/posts/update/{{id}}" role="button" class="btn btn-outline-primary" id="btn_update">수정</a>
         {{/same}}
         {{^same}}
             <button type="button" class="btn btn-outline-primary" id="btn-update" disabled>수정</button>
