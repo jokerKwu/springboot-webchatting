@@ -5,8 +5,8 @@ var main = {
             _this.save();
         });
 
-        $('#btn-update').on('click', function () {
-            _this.update();
+        $('#btn-update').on('click',function(){
+           _this.update();
         });
 
         $('#btn-delete').on('click', function () {
@@ -53,6 +53,7 @@ var main = {
             alert(JSON.stringify(error));
         });
     },
+
     delete : function () {
         var id = $('#id').val();
 

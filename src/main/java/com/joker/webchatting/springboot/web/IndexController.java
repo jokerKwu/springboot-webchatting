@@ -24,11 +24,7 @@ public class IndexController {
         model.addAttribute("posts", postsService.findAllDesc());
 
         if (user != null) {
-
-            System.out.println("유저 이름  = "+ user.getName());
-            System.out.println(model);
             model.addAttribute("name",user.getName());
-
         }
         return "index";
     }
@@ -37,18 +33,28 @@ public class IndexController {
     public String postsSave(Model model,@LoginUser SessionUser user) {
         model.addAttribute("name",user.getName());
 
-
         return "posts-save";
     }
 
+    @GetMapping("/posts/contents/{id}")
+    public String postsUpdate(@PathVariable Long id, Model model,@LoginUser SessionUser user) {
+        PostsResponseDto dto = postsService.findById(id);
+
+        if(user.getName().equals(dto.getAuthor())) {
+            model.addAttribute("same",user.getName());
+        }
+        model.addAttribute("post", dto);
+
+        return "posts-contents";
+    }
+
     @GetMapping("/posts/update/{id}")
-    public String postsUpdate(@PathVariable Long id, Model model) {
+    public String postsUpdateComplete(@PathVariable Long id, Model model) {
         PostsResponseDto dto = postsService.findById(id);
         model.addAttribute("post", dto);
 
         return "posts-update";
     }
-
 
     @GetMapping("/chat")
     public String chat(Model model,@LoginUser SessionUser user){
