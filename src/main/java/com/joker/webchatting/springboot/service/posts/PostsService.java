@@ -121,17 +121,16 @@ public class PostsService {
         System.out.println(" PostService : 마지막 번호 " + totalLastPageNum);
 
         // 현재 페이지를 기준으로 블럭의 마지막 페이지 번호 계산
-        Integer blockLastPageNum = (totalLastPageNum > curPageNum + BLOCK_PAGE_NUM_COUNT)
-                ? curPageNum + BLOCK_PAGE_NUM_COUNT
-                : totalLastPageNum;
+        Integer blockLastPageNum = (totalLastPageNum > curPageNum + BLOCK_PAGE_NUM_COUNT)? curPageNum + BLOCK_PAGE_NUM_COUNT: totalLastPageNum;
 
         // 페이지 시작 번호 조정
         curPageNum = (curPageNum <= 3) ? 1 : curPageNum - 2;
-
+        System.out.println(" PostService : 페이지 시작 번호 조정 " + curPageNum);
 
         // 페이지 번호 할당
         for (int val = curPageNum, idx = 0; val <= blockLastPageNum; val++, idx++) {
             pageList[idx] = val;
+            System.out.println(" PostService : for문 값체크 " + val+" "+idx+" "+pageList[idx]);
         }
 
         return pageList;
