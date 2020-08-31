@@ -28,8 +28,8 @@ public class IndexController {
         model.addAttribute("posts", postsService.findAllDesc());
         model.addAttribute("postList",postList);
         model.addAttribute("pageList",pageList);
-        System.out.println("포스트 리스트"+postList);
-        System.out.println("페이지리스트 "+ pageList);
+        System.out.println("포스트 리스트"+ postList);
+        System.out.println("페이지리스트 "+ pageList[0]);
 
         if (user != null) {
             model.addAttribute("name",user.getName());
