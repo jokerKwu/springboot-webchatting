@@ -39,9 +39,7 @@
         </tbody>
     </table>
     <div xmlns:th="http://www.w3.org/1999/xhtml">
-    <span th:each="pageNum : ${pageList}" th:inline="text">
-        <a th:href="@{'/?page=' + ${pageNum}}" th:text="{$pageNum}">1</a>
-    </span>
+        {{pageList}}
     </div>
     <form action="/post/search" method="GET">
         <div>
