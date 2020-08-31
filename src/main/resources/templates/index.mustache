@@ -38,6 +38,12 @@
         {{/posts}}
         </tbody>
     </table>
+    <form action="/post/search" method="GET">
+        <div>
+            <input name="keyword" type="text" placeholder="검색어를 입력해주세요.">
+        </div>
+        <button>검색하기</button>
+    </form>
 </div>
 
 {{>layout/footer}}

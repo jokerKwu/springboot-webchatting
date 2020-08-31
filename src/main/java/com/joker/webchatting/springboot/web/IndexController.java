@@ -2,16 +2,17 @@ package com.joker.webchatting.springboot.web;
 
 import com.joker.webchatting.springboot.config.auth.LoginUser;
 import com.joker.webchatting.springboot.config.auth.dto.SessionUser;
-import com.joker.webchatting.springboot.domain.user.User;
 import com.joker.webchatting.springboot.service.posts.PostsService;
+import com.joker.webchatting.springboot.web.dto.PostDto;
 import com.joker.webchatting.springboot.web.dto.PostsResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.servlet.http.HttpSession;
+import java.util.List;
 
 @RequiredArgsConstructor
 @Controller
@@ -61,4 +62,14 @@ public class IndexController {
         model.addAttribute("user",user.getName());
         return "chat";
     }
+
+    @GetMapping("/post/search")
+    public String search(@RequestParam(value="keyword")String keyword, Model model, @LoginUser SessionUser user){
+        List<PostDto> postDtoList = postsService.searchPosts(keyword);
+
+        model.addAttribute("posts", postDtoList);
+        model.addAttribute("user",user.getName());
+        return "index";
+    }
+
 }
