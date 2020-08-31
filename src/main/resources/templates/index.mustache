@@ -39,9 +39,9 @@
         </tbody>
     </table>
     <div>
-        <span>
-
-        </span>
+    <span th:each="pageNum : ${pageList}" th:inline="text">
+        <a th:href="@{'/?page=' + ${pageNum}}">[[${pageNum}]]</a>
+    </span>
     </div>
     <form action="/post/search" method="GET">
         <div>
