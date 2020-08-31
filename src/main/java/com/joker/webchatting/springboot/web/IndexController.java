@@ -21,9 +21,12 @@ public class IndexController {
     private final PostsService postsService;
 
     @GetMapping("/")
-    public String index(Model model, @LoginUser SessionUser user) {
-        model.addAttribute("posts", postsService.findAllDesc());
+    public String index(Model model,@RequestParam(value="page",defaultValue="1")Integer pageNum ,@LoginUser SessionUser user) {
+        List<PostDto> postList = postsService.getPostlist(pageNum);
+        Integer[] pageList = postsService.getPageList(pageNum);
 
+        model.addAttribute("posts", postsService.findAllDesc());
+        model.addAttribute("pageList",pageList);
         if (user != null) {
             model.addAttribute("name",user.getName());
         }
@@ -68,7 +71,7 @@ public class IndexController {
         List<PostDto> postDtoList = postsService.searchPosts(keyword);
 
         model.addAttribute("posts", postDtoList);
-        model.addAttribute("user",user.getName());
+        model.addAttribute("same",user.getName());
         return "index";
     }
 
