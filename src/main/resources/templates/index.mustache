@@ -1,5 +1,5 @@
 {{>layout/header}}
-<h2> 웹 서비스 </h2>
+<h2 xmlns:th="http://www.w3.org/1999/xhtml"> 웹 서비스 </h2>
 <div class="col-md-12">
     <div class="row">
         <div class="col-md-6">
@@ -38,7 +38,7 @@
         {{/posts}}
         </tbody>
     </table>
-    <div>
+    <div xmlns:th="http://www.w3.org/1999/xhtml">
     <span th:each="pageNum : ${pageList}" th:inline="text">
         <a th:href="@{'/?page=' + ${pageNum}}">[[${pageNum}]]</a>
     </span>
