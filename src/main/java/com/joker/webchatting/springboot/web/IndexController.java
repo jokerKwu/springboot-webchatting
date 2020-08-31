@@ -26,6 +26,7 @@ public class IndexController {
         Integer[] pageList = postsService.getPageList(pageNum);
 
         model.addAttribute("posts", postsService.findAllDesc());
+        model.addAttribute("postList",postList);
         model.addAttribute("pageList",pageList);
         if (user != null) {
             model.addAttribute("name",user.getName());
