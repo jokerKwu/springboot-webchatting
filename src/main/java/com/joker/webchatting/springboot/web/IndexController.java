@@ -88,8 +88,13 @@ public class IndexController {
     }
 
     @GetMapping("/post/list")
-    public Page<Posts> getPosts(Pageable pageable){
-        return postsRepository.findAll(pageable);
+    public String getPosts(Model model,Pageable pageable){
+        Page<Posts> postList = postsRepository.findAll(pageable);
+
+        model.addAttribute("post",postList);
+        System.out.println(postList);
+
+        return "index";
     }
 
 }
