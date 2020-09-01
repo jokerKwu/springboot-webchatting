@@ -36,7 +36,6 @@ public class PostsService {
                 .orElseThrow(() -> new IllegalArgumentException("해당 사용자가 없습니다. id=" + id));
 
         posts.update(requestDto.getTitle(), requestDto.getContent());
-
         return id;
     }
 
@@ -62,6 +61,9 @@ public class PostsService {
                 .map(PostsListResponseDto::new)
                 .collect(Collectors.toList());
     }
+
+
+
     //키워드 검색
     @Transactional
     public List<PostDto> searchPosts(String keyword) {

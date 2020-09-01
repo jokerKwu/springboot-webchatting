@@ -2,14 +2,22 @@ package com.joker.webchatting.springboot.web;
 
 import com.joker.webchatting.springboot.config.auth.LoginUser;
 import com.joker.webchatting.springboot.config.auth.dto.SessionUser;
+import com.joker.webchatting.springboot.domain.posts.Posts;
+import com.joker.webchatting.springboot.domain.posts.PostsRepository;
 import com.joker.webchatting.springboot.service.posts.PostsService;
 import com.joker.webchatting.springboot.web.dto.PostDto;
 import com.joker.webchatting.springboot.web.dto.PostsResponseDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
@@ -20,17 +28,16 @@ public class IndexController {
 
     private final PostsService postsService;
 
+    @Autowired
+    PostsRepository postsRepository;
+
     @GetMapping("/")
-    public String index(Model model,@RequestParam(value="page",defaultValue="1")Integer pageNum ,@LoginUser SessionUser user) {
-        List<PostDto> postList = postsService.getPostlist(pageNum);
-        Integer[] pageList = postsService.getPageList(pageNum);
+    public String index(Model model ,@LoginUser SessionUser user) {
 
         model.addAttribute("posts", postsService.findAllDesc());
-        model.addAttribute("postList",postList);
-        model.addAttribute("pageList",pageList);
 
-        System.out.println("포스트 리스트"+ postList);
-        System.out.println("페이지리스트 "+ pageList[0]);
+
+
 
         if (user != null) {
             model.addAttribute("name",user.getName());
@@ -78,6 +85,11 @@ public class IndexController {
         model.addAttribute("posts", postDtoList);
         model.addAttribute("same",user.getName());
         return "index";
+    }
+
+    @GetMapping("/post/list")
+    public Page<Posts> getPosts(Pageable pageable){
+        return postsRepository.findAll(pageable);
     }
 
 }
