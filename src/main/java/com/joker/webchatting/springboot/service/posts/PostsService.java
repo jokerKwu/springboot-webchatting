@@ -57,7 +57,8 @@ public class PostsService {
 
     @Transactional(readOnly = true)
     public List<PostsListResponseDto> findAllDesc() {
-        return postsRepository.findAllDesc().stream()
+        PageRequest pageRequest = new PageRequest(0,5,new Sort(Sort.Direction.DESC,"id"));
+        return postsRepository.findAllDesc(pageRequest).stream()
                 .map(PostsListResponseDto::new)
                 .collect(Collectors.toList());
     }

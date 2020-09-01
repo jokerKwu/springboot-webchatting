@@ -36,9 +36,6 @@ public class IndexController {
 
         model.addAttribute("posts", postsService.findAllDesc());
 
-
-
-
         if (user != null) {
             model.addAttribute("name",user.getName());
         }
@@ -55,7 +52,6 @@ public class IndexController {
     @GetMapping("/posts/contents/{id}")
     public String postsUpdate(@PathVariable Long id, Model model,@LoginUser SessionUser user) {
         PostsResponseDto dto = postsService.findById(id);
-        System.out.println(dto.getAuthor() +  "     " + user.getName() );
         if(user.getName().equals(dto.getAuthor())) {
             model.addAttribute("same",user.getName());
         }
@@ -86,15 +82,4 @@ public class IndexController {
         model.addAttribute("same",user.getName());
         return "index";
     }
-
-    @GetMapping("/post/list")
-    public String getPosts(Model model,Pageable pageable){
-        Page<Posts> postList = postsRepository.findAll(pageable);
-
-        model.addAttribute("post",postList);
-        System.out.println(postList);
-
-        return "index";
-    }
-
 }
