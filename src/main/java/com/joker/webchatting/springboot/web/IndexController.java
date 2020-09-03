@@ -44,7 +44,7 @@ public class IndexController {
         for(int i=0;i<postList.getTotalPages();i++) {
             pageNumber[i] = i+1;
         }
-        model.addAttribute("pageNum",pageNumber);
+        model.addAttribute("pageNumber",pageNumber);
         if (user != null) {
             model.addAttribute("name",user.getName());
         }
