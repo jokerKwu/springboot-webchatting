@@ -28,12 +28,17 @@ public class IndexController {
     private final PostsService postsService;
 
     @GetMapping("/")
-    public String index(Model model ,@LoginUser SessionUser user) {
+    public String index(Model model ,@PageableDefault Pageable pageable, @LoginUser SessionUser user) {
 
         model.addAttribute("posts", postsService.findAllDesc());
 
 
-
+        Page<Posts> postList = postsService.getPostList(pageable);
+        model.addAttribute("posts",postList);
+        System.out.println("총 엘리먼트 수   : "+ postList.getTotalElements());
+        System.out.println("전체 페이지 수   : "+ postList.getTotalPages());
+        System.out.println("페이지에 표시할 엘리먼트 수    : "+ postList.getSize());
+        System.out.println("현재 페이지 인덱스   : "+ postList.getNumber());
 
         if (user != null) {
             model.addAttribute("name",user.getName());
@@ -88,7 +93,10 @@ public class IndexController {
         Page<Posts> postList = postsService.getPostList(pageable);
         model.addAttribute("posts",postList);
 
-        System.out.println("posts  : "+ postList);
+        System.out.println("총 엘리먼트 수   : "+ postList.getTotalElements());
+        System.out.println("전체 페이지 수   : "+ postList.getTotalPages());
+        System.out.println("페이지에 표시할 엘리먼트 수    : "+ postList.getSize());
+        System.out.println("현재 페이지 인덱스   : "+ postList.getNumber());
 
         return "index";
     }
