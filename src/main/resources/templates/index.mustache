@@ -39,7 +39,9 @@
         </tbody>
     </table>
     <div>
-        <a href="/?page={{pageNumber}}">{{pageNumber}}</a>
+        {{#pageNumber}}
+            <a href="/?page={{pageNumber}}">{{pageNumber}}</a>
+        {{/pageNumber}}
     </div>
     <form action="/post/search" method="GET">
         <div>
