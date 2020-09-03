@@ -39,11 +39,10 @@ public class IndexController {
         System.out.println("전체 페이지 수   : "+ postList.getTotalPages());
         System.out.println("페이지에 표시할 엘리먼트 수    : "+ postList.getSize());
         System.out.println("현재 페이지 인덱스   : "+ postList.getNumber());
-        int[] pageNumber = new int[100];
-        for (int i=0;i<2;i++){
-            pageNumber[i] = i+1;
-        }
-        model.addAttribute("pageNumber",pageNumber);
+
+        model.addAttribute("pageNumber",1);
+
+        model.addAttribute("pageNumber",2);
         if (user != null) {
             model.addAttribute("name",user.getName());
         }
