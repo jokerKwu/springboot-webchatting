@@ -7,6 +7,7 @@ import com.joker.webchatting.springboot.web.dto.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -36,6 +37,7 @@ public class PostsService {
                 .orElseThrow(() -> new IllegalArgumentException("해당 사용자가 없습니다. id=" + id));
 
         posts.update(requestDto.getTitle(), requestDto.getContent());
+
         return id;
     }
 
@@ -57,14 +59,10 @@ public class PostsService {
 
     @Transactional(readOnly = true)
     public List<PostsListResponseDto> findAllDesc() {
-        PageRequest pageRequest = new PageRequest(0,5,new Sort(Sort.Direction.DESC,"id"));
-        return postsRepository.findAllDesc(pageRequest).stream()
+        return postsRepository.findAllDesc().stream()
                 .map(PostsListResponseDto::new)
                 .collect(Collectors.toList());
     }
-
-
-
     //키워드 검색
     @Transactional
     public List<PostDto> searchPosts(String keyword) {
@@ -139,6 +137,12 @@ public class PostsService {
         return pageList;
     }
 
+    public Page<Posts> getPostList(Pageable pageable){
+        int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() - 1);
+        pageable = PageRequest.of(page, 5);
+
+        return postsRepository.findAll(pageable);
+    }
 
 
 }

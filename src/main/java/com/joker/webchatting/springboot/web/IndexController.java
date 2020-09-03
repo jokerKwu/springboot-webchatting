@@ -3,16 +3,15 @@ package com.joker.webchatting.springboot.web;
 import com.joker.webchatting.springboot.config.auth.LoginUser;
 import com.joker.webchatting.springboot.config.auth.dto.SessionUser;
 import com.joker.webchatting.springboot.domain.posts.Posts;
-import com.joker.webchatting.springboot.domain.posts.PostsRepository;
 import com.joker.webchatting.springboot.service.posts.PostsService;
 import com.joker.webchatting.springboot.web.dto.PostDto;
 import com.joker.webchatting.springboot.web.dto.PostsResponseDto;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,13 +27,13 @@ public class IndexController {
 
     private final PostsService postsService;
 
-    @Autowired
-    PostsRepository postsRepository;
-
     @GetMapping("/")
     public String index(Model model ,@LoginUser SessionUser user) {
 
         model.addAttribute("posts", postsService.findAllDesc());
+
+
+
 
         if (user != null) {
             model.addAttribute("name",user.getName());
@@ -52,6 +51,7 @@ public class IndexController {
     @GetMapping("/posts/contents/{id}")
     public String postsUpdate(@PathVariable Long id, Model model,@LoginUser SessionUser user) {
         PostsResponseDto dto = postsService.findById(id);
+        System.out.println(dto.getAuthor() +  "     " + user.getName() );
         if(user.getName().equals(dto.getAuthor())) {
             model.addAttribute("same",user.getName());
         }
@@ -82,4 +82,15 @@ public class IndexController {
         model.addAttribute("same",user.getName());
         return "index";
     }
+
+    @GetMapping("/posts")
+    public String postView(@PageableDefault Pageable pageable, Model model){
+        Page<Posts> postList = postsService.getPostList(pageable);
+        model.addAttribute("posts",postList);
+
+        System.out.println("posts  : "+ postList);
+
+        return "index";
+    }
+
 }
