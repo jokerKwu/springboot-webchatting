@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -39,10 +40,12 @@ public class IndexController {
         System.out.println("전체 페이지 수   : "+ postList.getTotalPages());
         System.out.println("페이지에 표시할 엘리먼트 수    : "+ postList.getSize());
         System.out.println("현재 페이지 인덱스   : "+ postList.getNumber());
+        ArrayList<Integer> arr = new ArrayList<Integer>();
+        arr.add(1);
+        arr.add(2);
 
-        model.addAttribute("pageNumber",1);
+        model.addAttribute("pageNumber",arr);
 
-        model.addAttribute("pageNumber",2);
         if (user != null) {
             model.addAttribute("name",user.getName());
         }
