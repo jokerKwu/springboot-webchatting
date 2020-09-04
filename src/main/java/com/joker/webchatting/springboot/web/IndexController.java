@@ -44,10 +44,10 @@ public class IndexController {
         System.out.println("현재 페이지 인덱스   : "+ postList.getNumber());
 
         List<Integer> pages = new ArrayList<>();
-        Integer num = new Integer(1);
-        pages.add(num);
-        num = new Integer(2);
-        pages.add(num);
+        for(int i=0;i<postList.getTotalPages();i++){
+            Integer num = new Integer(i+1);
+            pages.add(num);
+        }
         model.addAttribute("pageNumber",pages);
 
         if (user != null) {
