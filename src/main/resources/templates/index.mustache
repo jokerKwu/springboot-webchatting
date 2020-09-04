@@ -42,7 +42,7 @@
 
     <div>
         {{#pageNumber}}
-            <a href="/?page={{pageNumber}}">{{pageNumber}}</a>
+            <a href="/?page={{.}}">{{.}}</a>
         {{/pageNumber}}
     </div>
     <form action="/post/search" method="GET">
