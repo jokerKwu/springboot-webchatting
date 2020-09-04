@@ -41,9 +41,9 @@
     </table>
 
     <div>
-        <c:forEach begin="${startPage}" end="${endPage}" var = idx>
-            <a href="?page=${idx}">${idx}</a>
-        </c:forEach>
+        {{#pageNumber}}
+            <a href="/?page={{pageNumber}}">{{pageNumber}}</a>
+        {{/pageNumber}}
     </div>
     <form action="/post/search" method="GET">
         <div>
