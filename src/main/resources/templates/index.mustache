@@ -1,4 +1,5 @@
 {{>layout/header}}
+<script src="mustache.min.js"></script>
 <h2 xmlns:th="http://www.w3.org/1999/xhtml"> 웹 서비스 </h2>
 <div class="col-md-12">
     <div class="row">
@@ -38,9 +39,10 @@
         {{/posts}}
         </tbody>
     </table>
-    <div>
+    <div id="result1"></div>
+    <div d="templete1" type="x-tmpl-mustache" >
         {{#pageNumber}}
-            <a href="/?page={{pageNumber}}">{{pageNumber}}</a>
+            <a href="/?page={{page}}">{{page}}</a>
         {{/pageNumber}}
     </div>
     <form action="/post/search" method="GET">
@@ -50,5 +52,16 @@
         </div>
     </form>
 </div>
-
+<script type="javascript">
+    function test() {
+        var template = $('templete1').html();
+        Mustache.parse(template);
+        var date = {
+            page:[1,2]
+        };
+        var rendered = Mustache.render(template, date);
+        $('#result1').html(rendered);
+    }
+    test();
+</script>
 {{>layout/footer}}
