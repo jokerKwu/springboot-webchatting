@@ -1,132 +1,53 @@
 package com.joker.webchatting.springboot.service.chat;
 
-import com.joker.webchatting.springboot.domain.chat.ChatMessage;
-import com.joker.webchatting.springboot.domain.chat.ChatRequest;
-import com.joker.webchatting.springboot.domain.chat.ChatResponse;
-import com.joker.webchatting.springboot.domain.chat.MessageType;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.messaging.simp.SimpMessagingTemplate;
-import org.springframework.scheduling.annotation.Async;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.joker.webchatting.springboot.domain.chat.ChatRoom;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import org.springframework.web.context.request.async.DeferredResult;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import javax.annotation.PostConstruct;
-import java.util.Iterator;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.UUID;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.locks.ReentrantReadWriteLock;
+import org.springframework.web.socket.TextMessage;
+import org.springframework.web.socket.WebSocketSession;
 
+import javax.annotation.PostConstruct;
+import java.io.IOException;
+import java.util.*;
+
+@Slf4j
+@RequiredArgsConstructor
 @Service
 public class ChatService {
 
-    private static final Logger logger = LoggerFactory.getLogger(ChatService.class);
-    private Map<ChatRequest, DeferredResult<ChatResponse>> waitingUsers;
-    // {key : websocket session id, value : chat room id}
-    private Map<String, String> connectedUsers;
-    private ReentrantReadWriteLock lock;
-
-    @Autowired
-    private SimpMessagingTemplate messagingTemplate;
+    private final ObjectMapper objectMapper;
+    private Map<String, ChatRoom> chatRooms;
 
     @PostConstruct
-    private void setUp() {
-        this.waitingUsers = new LinkedHashMap<>();
-        this.lock = new ReentrantReadWriteLock();
-        this.connectedUsers = new ConcurrentHashMap<>();
+    private void init() {
+        chatRooms = new LinkedHashMap<>();
     }
 
-    @Async("asyncThreadPool")
-    public void joinChatRoom(ChatRequest request, DeferredResult<ChatResponse> deferredResult) {
-        logger.info("## Join chat room request. {}[{}]", Thread.currentThread().getName(), Thread.currentThread().getId());
-        if (request == null || deferredResult == null) {
-            return;
-        }
+    public List<ChatRoom> findAllRoom() {
+        return new ArrayList<>(chatRooms.values());
+    }
 
+    public ChatRoom findRoomById(String roomId) {
+        return chatRooms.get(roomId);
+    }
+
+    public ChatRoom createRoom(String name) {
+        String randomId = UUID.randomUUID().toString();
+        ChatRoom chatRoom = ChatRoom.builder()
+                .roomId(randomId)
+                .name(name)
+                .build();
+        chatRooms.put(randomId, chatRoom);
+        return chatRoom;
+    }
+
+    public <T> void sendMessage(WebSocketSession session, T message) {
         try {
-            lock.writeLock().lock();
-            waitingUsers.put(request, deferredResult);
-        } finally {
-            lock.writeLock().unlock();
-            establishChatRoom();
-        }
-    }
-
-    public void cancelChatRoom(ChatRequest chatRequest) {
-        try {
-            lock.writeLock().lock();
-            setJoinResult(waitingUsers.remove(chatRequest), new ChatResponse(ChatResponse.ResponseResult.CANCEL, null, chatRequest.getSessionId()));
-        } finally {
-            lock.writeLock().unlock();
-        }
-    }
-
-    public void timeout(ChatRequest chatRequest) {
-        try {
-            lock.writeLock().lock();
-            setJoinResult(waitingUsers.remove(chatRequest), new ChatResponse(ChatResponse.ResponseResult.TIMEOUT, null, chatRequest.getSessionId()));
-        } finally {
-            lock.writeLock().unlock();
-        }
-    }
-
-    public void establishChatRoom() {
-        try {
-            logger.debug("Current waiting users : " + waitingUsers.size());
-            lock.readLock().lock();
-            if (waitingUsers.size() < 2) {
-                return;
-            }
-
-            Iterator<ChatRequest> itr = waitingUsers.keySet().iterator();
-            ChatRequest user1 = itr.next();
-            ChatRequest user2 = itr.next();
-
-            String uuid = UUID.randomUUID().toString();
-
-            DeferredResult<ChatResponse> user1Result = waitingUsers.remove(user1);
-            DeferredResult<ChatResponse> user2Result = waitingUsers.remove(user2);
-
-            user1Result.setResult(new ChatResponse(ChatResponse.ResponseResult.SUCCESS, uuid, user1.getSessionId()));
-            user2Result.setResult(new ChatResponse(ChatResponse.ResponseResult.SUCCESS, uuid, user2.getSessionId()));
-        } catch (Exception e) {
-            logger.warn("Exception occur while checking waiting users", e);
-        } finally {
-            lock.readLock().unlock();
-        }
-    }
-
-    public void sendMessage(String chatRoomId, ChatMessage chatMessage) {
-        String destination = getDestination(chatRoomId);
-        System.out.println("ChatService 도척 " + chatMessage);
-
-        System.out.println("ChatService 도척 " + destination);
-
-        messagingTemplate.convertAndSend(destination, chatMessage);
-    }
-
-    public void connectUser(String chatRoomId, String websocketSessionId) {
-        connectedUsers.put(websocketSessionId, chatRoomId);
-    }
-
-    public void disconnectUser(String websocketSessionId) {
-        String chatRoomId = connectedUsers.get(websocketSessionId);
-        ChatMessage chatMessage = new ChatMessage();
-
-        chatMessage.setMessageType(MessageType.DISCONNECTED);
-        sendMessage(chatRoomId, chatMessage);
-    }
-
-    private String getDestination(String chatRoomId) {
-        System.out.println("겟데스티네이션에 도착 ");
-        return "/topic/chat/" + chatRoomId;
-    }
-
-    private void setJoinResult(DeferredResult<ChatResponse> result, ChatResponse response) {
-        if (result != null) {
-            result.setResult(response);
+            session.sendMessage(new TextMessage(objectMapper.writeValueAsString(message)));
+        } catch (IOException e) {
+            log.error(e.getMessage(), e);
         }
     }
 }

@@ -11,10 +11,12 @@ import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry
 @Configuration
 @EnableWebSocket
 public class WebSockConfig implements WebSocketConfigurer {
+
     private final WebSocketHandler webSocketHandler;
 
     @Override
     public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
-        registry.addHandler(webSocketHandler,"/ws/chat").setAllowedOrigins("*");
+        registry.addHandler(webSocketHandler, "/ws/chat").setAllowedOrigins("*");
     }
+
 }
