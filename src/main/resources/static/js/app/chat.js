@@ -127,9 +127,9 @@ $(function () {
 
                 if (result.messageType == 'CHAT') {
                     if (result.senderSessionId === ChatManager.sessionId) {
-                        message += '[Me] : ';
+                        message += '[나] : ';
                     } else {
-                        message += '[Anonymous] : ';
+                        message += '[상대방] : ';
                     }
 
                     message += result.message + '\n';
