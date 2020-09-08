@@ -18,10 +18,14 @@
 <h1>ㅇㅇㅇㅇ</h1>
 <div class="container" id="app" v-cloak>
     <div>
+
+        <h1>ㅇㅇㅇㅇ1</h1>
         <h2>{{room.name}}</h2>
     </div>
+
     <div class="input-group">
         <div class="input-group-prepend">
+            <h1>ㅇㅇㅇㅇ2</h1>
             <label class="input-group-text">내용</label>
         </div>
         <input type="text" class="form-control" v-model="message" v-on:keypress.enter="sendMessage">
@@ -76,6 +80,8 @@
         }
     });
     function connect() {
+
+        alert(document.title+"1");
         // pub/sub event
         ws.connect({}, function(frame) {
             ws.subscribe("/sub/chat/room/"+vm.$data.roomId, function(message) {
