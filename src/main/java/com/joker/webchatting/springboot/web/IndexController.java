@@ -83,12 +83,6 @@ public class IndexController {
         return "posts-update";
     }
 
-    @GetMapping("/chat")
-    public String chat(Model model,@LoginUser SessionUser user){
-        model.addAttribute("user",user.getName());
-        return "chat";
-    }
-
     @GetMapping("/post/search")
     public String search(@RequestParam(value="keyword")String keyword, Model model, @LoginUser SessionUser user){
         List<PostDto> postDtoList = postsService.searchPosts(keyword);
