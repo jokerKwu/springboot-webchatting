@@ -1,5 +1,6 @@
+
 <!doctype html>
-<html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml">
+<html lang="en">
 <head>
     <title>Websocket ChatRoom</title>
     <!-- Required meta tags -->
@@ -16,21 +17,16 @@
 </head>
 <body>
 <div class="container" id="app" v-cloak>
-    <div class="row">
-        <div class="col-md-6">
-            <h3>{{roomName}}</h3>
-        </div>
-        <div class="col-md-6 text-right">
-            <a class="btn btn-primary btn-sm" href="/logout">로그아웃</a>
-        </div>
+    <div>
+        <h2>{{room.name}}</h2>
     </div>
     <div class="input-group">
         <div class="input-group-prepend">
             <label class="input-group-text">내용</label>
         </div>
-        <input type="text" class="form-control" v-model="message" v-on:keypress.enter="sendMessage('TALK')">
+        <input type="text" class="form-control" v-model="message" v-on:keypress.enter="sendMessage">
         <div class="input-group-append">
-            <button class="btn btn-primary" type="button" @click="sendMessage('TALK')">보내기</button>
+            <button class="btn btn-primary" type="button" @click="sendMessage">보내기</button>
         </div>
     </div>
     <ul class="list-group">
@@ -38,6 +34,7 @@
             {{message.sender}} - {{message.message}}</a>
         </li>
     </ul>
+    <div></div>
 </div>
 <!-- JavaScript -->
 <script src="/webjars/vue/2.5.16/dist/vue.min.js"></script>
@@ -45,52 +42,59 @@
 <script src="/webjars/sockjs-client/1.1.2/sockjs.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
 <script>
+    //alert(document.title);
     // websocket & stomp initialize
-    alert(1);
     var sock = new SockJS("/ws-stomp");
-    alert(2);
     var ws = Stomp.over(sock);
-    alert(3);
     var reconnect = 0;
     // vue.js
     var vm = new Vue({
         el: '#app',
         data: {
             roomId: '',
-            roomName: '',
+            room: {},
+            sender: '',
             message: '',
-            messages: [],
-            token: ''
+            messages: []
         },
         created() {
             this.roomId = localStorage.getItem('wschat.roomId');
-            this.roomName = localStorage.getItem('wschat.roomName');
-            var _this = this;
-            axios.get('/chat/user').then(response => {
-                _this.token = response.data.token;
-                ws.connect({"token":_this.token}, function(frame) {
-                    ws.subscribe("/sub/chat/room/"+_this.roomId, function(message) {
-                        var recv = JSON.parse(message.body);
-                        _this.recvMessage(recv);
-                    });
-                    _this.sendMessage('ENTER');
-                }, function(error) {
-                    alert("서버 연결에 실패 하였습니다. 다시 접속해 주십시요.");
-                    location.href="/chat/room";
-                });
-            });
+            this.sender = localStorage.getItem('wschat.sender');
+            this.findRoom();
         },
         methods: {
-            sendMessage: function(type) {
-                ws.send("/pub/chat/message", {"token":this.token}, JSON.stringify({type:type, roomId:this.roomId, message:this.message}));
+            findRoom: function() {
+                axios.get('/chat/room/'+this.roomId).then(response => { this.room = response.data; });
+            },
+            sendMessage: function() {
+                ws.send("/pub/chat/message", {}, JSON.stringify({type:'TALK', roomId:this.roomId, sender:this.sender, message:this.message}));
                 this.message = '';
             },
             recvMessage: function(recv) {
-                this.messages.unshift({"type":recv.type,"sender":recv.sender,"message":recv.message})
+                this.messages.unshift({"type":recv.type,"sender":recv.type=='ENTER'?'[알림]':recv.sender,"message":recv.message})
             }
         }
     });
-    alert(5);
+    function connect() {
+        // pub/sub event
+        ws.connect({}, function(frame) {
+            ws.subscribe("/sub/chat/room/"+vm.$data.roomId, function(message) {
+                var recv = JSON.parse(message.body);
+                vm.recvMessage(recv);
+            });
+            ws.send("/pub/chat/message", {}, JSON.stringify({type:'ENTER', roomId:vm.$data.roomId, sender:vm.$data.sender}));
+        }, function(error) {
+            if(reconnect++ < 5) {
+                setTimeout(function() {
+                    // console.log("connection reconnect");
+                    sock = new SockJS("/ws-stomp");
+                    ws = Stomp.over(sock);
+                    connect();
+                },10*1000);
+            }
+        });
+    }
+    connect();
 </script>
 </body>
 </html>
