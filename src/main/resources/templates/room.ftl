@@ -29,7 +29,7 @@
         </div>
     </div>
     <ul class="list-group">
-        <li class="list-group-item list-group-item-action" v-for="item in chatrooms" v-bind:key="item.roomId" v-on:click="enterRoom(item.roomId)">
+        <li class="list-group-item list-group-item-action" v-for="item in chatrooms" v-bind="item.roomId" v-on=enterRoom(item.roomId)">
             {{item.name}}
         </li>
     </ul>
