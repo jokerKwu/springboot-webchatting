@@ -46,8 +46,11 @@
 <script src="/webjars/stomp-websocket/2.3.3-1/stomp.min.js"></script>
 <script>
     // websocket & stomp initialize
+    alert(1);
     var sock = new SockJS("/ws-stomp");
+    alert(2);
     var ws = Stomp.over(sock);
+    alert(3);
     var reconnect = 0;
     // vue.js
     var vm = new Vue({
@@ -87,6 +90,7 @@
             }
         }
     });
+    alert(5);
 </script>
 </body>
 </html>
