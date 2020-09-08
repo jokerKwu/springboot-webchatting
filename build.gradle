@@ -40,14 +40,16 @@ dependencies {
     compile("org.springframework.boot:spring-boot-starter-thymeleaf")
 
     // 09.08 추가
-    compile("org.springframework.boot:spring-boot-starter-freemarker");
-    compile("org.webjars.bower:bootstrap:4.3.1");
-    compile("org.webjars.bower:vue:2.5.16");
-    compile("org.webjars.bower:axios:0.17.1");
-    compile("org.webjars:sockjs-client:1.1.2");
-    compile("org.webjars:stomp-websocket:2.3.3-1");
-    compile("com.google.code.gson:gson:2.8.0");
+    compile("org.springframework.boot:spring-boot-starter-freemarker")
+    compile("org.webjars.bower:bootstrap:4.3.1")
+    compile("org.webjars.bower:vue:2.5.16")
+    compile("org.webjars.bower:axios:0.17.1")
+    compile("org.webjars:sockjs-client:1.1.2")
+    compile("org.webjars:stomp-websocket:2.3.3-1")
+    compile("com.google.code.gson:gson:2.8.0")
+    compile("org.springframework.boot:spring-boot-starter-data-redis")
 
+    compile group: 'it.ozimov', name: 'embedded-redis',version:'0.7.2'
 
     compile("org.webjars:stomp-websocket:2.3.3")
     compile("org.springframework.boot:spring-boot-starter-websocket")
