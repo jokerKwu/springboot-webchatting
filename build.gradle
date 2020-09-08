@@ -39,6 +39,12 @@ dependencies {
     compile("org.springframework.boot:spring-boot-devtools");
     compile("org.springframework.boot:spring-boot-starter-thymeleaf")
 
+    // 09.08 추가
+    compile("org.springframework.boot:spring-boot-starter-freemarker");
+    compile("org.webjars.bower:bootstrap:4.3.1");
+    compile("org.webjars:sockjs-client:1.1.2");
+    compile("org.webjars:stomp-websocket:2.3.3-1");
+    compile("com.google.code.gson:gson:2.8.0");
 
 
     compile("org.webjars:stomp-websocket:2.3.3")
@@ -46,7 +52,7 @@ dependencies {
     compile("org.webjars:handlebars:4.0.11-1")
     compile("org.webjars:webjars-locator-core")
     compile("org.webjars:jquery:3.1.0")
-    compile("org.webjars:bootstrap:4.1.0")
+   // compile("org.webjars:bootstrap:4.1.0")
     
 
 
