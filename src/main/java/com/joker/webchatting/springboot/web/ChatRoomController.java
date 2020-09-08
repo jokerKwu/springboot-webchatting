@@ -19,7 +19,7 @@ public class ChatRoomController {
     //채팅 리스트 화면
     @GetMapping("/room")
     public String rooms(Model model){
-        return "room";
+        return "/room";
 
     }
 
@@ -42,7 +42,7 @@ public class ChatRoomController {
     public String roomDetail(Model model,@PathVariable String roomId){
         model.addAttribute("roomId",roomId);
         System.out.println("여기 들어오냐??");
-        return "roomdetail";
+        return "/roomdetail";
     }
 
     //특정 채팅방 조회

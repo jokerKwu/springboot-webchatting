@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml">
 <head>
-    <title>Websocket ChatRoom</title>
+    <title>채팅방</title>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
@@ -15,6 +15,7 @@
     </style>
 </head>
 <body>
+<h1>ㅇㅇㅇㅇ</h1>
 <div class="container" id="app" v-cloak>
     <div>
         <h2>{{room.name}}</h2>
@@ -41,7 +42,7 @@
 <script src="/webjars/sockjs-client/1.1.2/sockjs.min.js"></script>
 <script src="/webjars/stomp-websocket/2.3.3-1/stomp.min.js"></script>
 <script>
-    //alert(document.title);
+    alert(document.title);
     // websocket & stomp initialize
     var sock = new SockJS("/ws-stomp");
     var ws = Stomp.over(sock);
