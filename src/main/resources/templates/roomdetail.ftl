@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml">
 <head>
     <title>Websocket ChatRoom</title>
     <!-- Required meta tags -->
@@ -23,7 +23,7 @@
         <div class="input-group-prepend">
             <label class="input-group-text">내용</label>
         </div>
-        <input type="text" class="form-control" v-model="message" v-on=keypress.enter="sendMessage">
+        <input type="text" class="form-control" v-model="message" v-on:keypress.enter="sendMessage">
         <div class="input-group-append">
             <button class="btn btn-primary" type="button" @click="sendMessage">보내기</button>
         </div>
