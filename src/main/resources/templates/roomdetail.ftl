@@ -1,6 +1,6 @@
 
 <!doctype html>
-<html lang="en">
+<html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml">
 <head>
     <title>Websocket ChatRoom</title>
     <!-- Required meta tags -->
@@ -16,6 +16,7 @@
     </style>
 </head>
 <body>
+<a href="/chat/room" role="button" class="btn btn-outline-primary">방 나가기</a>
 <div class="container" id="app" v-cloak>
     <div>
         <h2>{{room.name}}</h2>

@@ -19,6 +19,7 @@
             <h3>채팅방 리스트</h3>
         </div>
     </div>
+    <a href="/" role="button" class="btn btn-outline-primary">채팅 나가기</a>
     <div class="input-group">
         <div class="input-group-prepend">
             <label class="input-group-text">방제목</label>
