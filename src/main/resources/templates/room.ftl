@@ -84,7 +84,7 @@
                     location.href="/chat/room/enter/"+roomId;
                 }
             },
-            deteleRoom: function(roomId){
+            deleteRoom: function(roomId){
                 alert("들어오나");
                 if("" === this.room_name) {
                     alert("방 제목을 입력해 주십시요.");
