@@ -34,10 +34,15 @@
 
     </div>
     <ul class="list-group">
+        <!--
         <li class="list-group-item list-group-item-action" v-for="item in chatrooms" v-bind:key="item.roomId" v-on:click="enterRoom(item.roomId)">
-            {{item.name}} <button class="btn btn-primary" type="button" @click="deleteRoom">삭제하기</button>
+            {{item.name}}
         </li>
-
+        -->
+        <li class="list-group-item list-group-item-action" v-for="item in chatrooms" v-bind:key="item.roomId">
+            <button class="btn btn-primary" type="button"  @click="enterRoom(item.roomId)">{{item.name}}</button>
+            <button class="btn btn-primary" type="button"  @click="deleteRoom(item.roomId)">delete</button>
+        </li>
     </ul>
 </div>
 <!-- JavaScript -->
