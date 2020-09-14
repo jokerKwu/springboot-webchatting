@@ -40,8 +40,8 @@
         </li>
         -->
         <li class="list-group-item list-group-item-action" v-for="item in chatrooms" v-bind:key="item.roomId">
-            <input class="btn btn-primary" type="text" value={{item.name}} readonly v-on:click="enterRoom(item.roomId)"/>
-            <button class="btn btn-primary" type="button"  @click="deleteRoom(item.roomId)">delete</button>
+            <input class="btn btn-outline-primary" type="text"  v-bind:key="item.roomId" value="item.name" readonly v-on:click="enterRoom(item.roomId)"/>
+            <button class="btn btn-outline-danger" type="button"  @click="deleteRoom(item.roomId)">delete</button>
         </li>
     </ul>
 </div>
