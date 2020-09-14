@@ -35,8 +35,9 @@
     </div>
     <ul class="list-group">
         <li class="list-group-item list-group-item-action" v-for="item in chatrooms" v-bind:key="item.roomId" v-on:click="enterRoom(item.roomId)">
-            {{item.name}}
+            {{item.name}} <button class="btn btn-primary" type="button" @click="deleteRoom">삭제하기</button>
         </li>
+
     </ul>
 </div>
 <!-- JavaScript -->
@@ -82,6 +83,29 @@
                     localStorage.setItem('wschat.roomId',roomId);
                     location.href="/chat/room/enter/"+roomId;
                 }
+            },
+            deteleRoom: function(roomId){
+                alert("들어오나");
+                if("" === this.room_name) {
+                    alert("방 제목을 입력해 주십시요.");
+                    return;
+                }
+                alert(this.room_name);
+                /*
+                else {
+                    var params = new URLSearchParams();
+                    params.append("name",this.room_name);
+                    axios.post('/chat/room', params)
+                        .then(
+                            response => {
+                                alert(response.data.name+"방 개설에 성공하였습니다.")
+                                this.room_name = '';
+                                this.findAllRoom();
+                            }
+                        )
+                        .catch( response => { alert("채팅방 개설에 실패하였습니다."); } );
+                }
+                */
             }
         }
     });

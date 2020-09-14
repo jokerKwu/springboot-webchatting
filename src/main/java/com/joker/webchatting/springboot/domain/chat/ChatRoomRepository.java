@@ -48,6 +48,7 @@ public class ChatRoomRepository {
     public ChatRoom createChatRoom(String name) {
         ChatRoom chatRoom = ChatRoom.create(name);
         opsHashChatRoom.put(CHAT_ROOMS, chatRoom.getRoomId(), chatRoom);
+
         return chatRoom;
     }
 
@@ -60,6 +61,14 @@ public class ChatRoomRepository {
             topic = new ChannelTopic(roomId);
         redisMessageListener.addMessageListener(redisSubscriber, topic);
         topics.put(roomId, topic);
+    }
+
+    /**
+     *     채팅방 삭제: 서버간 채팅방 공유를 위해 redis hash에서 삭제한다.
+     **/
+    public void deleteChatRoom(String roomId){
+        System.out.println("룸아이디 =  " + roomId);
+
     }
 
     public ChannelTopic getTopic(String roomId) {

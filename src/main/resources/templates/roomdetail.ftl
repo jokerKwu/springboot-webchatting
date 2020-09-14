@@ -32,9 +32,7 @@
         <div class="input-group-append">
             <a href="/chat/room" role="button" class="btn btn-outline-primary">방 나가기</a>
         </div>
-
-
-</div>
+    </div>
     <ul class="list-group">
         <li class="list-group-item" v-for="message in messages">
             {{message.sender}} - {{message.message}}</a>
