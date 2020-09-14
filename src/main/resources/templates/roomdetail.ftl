@@ -16,7 +16,6 @@
     </style>
 </head>
 <body>
-<a href="/chat/room" role="button" class="btn btn-outline-primary">방 나가기</a>
 <div class="container" id="app" v-cloak>
     <div>
         <h2>{{room.name}}</h2>
@@ -29,7 +28,13 @@
         <div class="input-group-append">
             <button class="btn btn-primary" type="button" @click="sendMessage">보내기</button>
         </div>
-    </div>
+
+        <div class="input-group-append">
+            <a href="/chat/room" role="button" class="btn btn-outline-primary">방 나가기</a>
+        </div>
+
+
+</div>
     <ul class="list-group">
         <li class="list-group-item" v-for="message in messages">
             {{message.sender}} - {{message.message}}</a>

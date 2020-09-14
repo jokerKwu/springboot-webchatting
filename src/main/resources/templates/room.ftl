@@ -19,7 +19,6 @@
             <h3>채팅방 리스트</h3>
         </div>
     </div>
-    <a href="/" role="button" class="btn btn-outline-primary">채팅 나가기</a>
     <div class="input-group">
         <div class="input-group-prepend">
             <label class="input-group-text">방제목</label>
@@ -28,6 +27,11 @@
         <div class="input-group-append">
             <button class="btn btn-primary" type="button" @click="createRoom">채팅방 개설</button>
         </div>
+
+        <div class="input-group-append">
+            <a href="/" role="button" class="btn btn-outline-primary">채팅 나가기</a>
+        </div>
+
     </div>
     <ul class="list-group">
         <li class="list-group-item list-group-item-action" v-for="item in chatrooms" v-bind:key="item.roomId" v-on:click="enterRoom(item.roomId)">
