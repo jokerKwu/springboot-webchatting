@@ -40,7 +40,7 @@
         </li>
         -->
         <li class="list-group-item list-group-item-action" v-for="item in chatrooms" v-bind:key="item.roomId">
-            <button class="btn btn-primary" type="button"  @click="enterRoom(item.roomId)">{{item.name}}</button>
+            <input class="btn btn-primary" type="text" value={{item.name}} readonly v-on:click="enterRoom(item.roomId)"/>
             <button class="btn btn-primary" type="button"  @click="deleteRoom(item.roomId)">delete</button>
         </li>
     </ul>
@@ -91,10 +91,6 @@
             },
             deleteRoom: function(roomId){
                 alert("들어오나");
-                if("" === this.room_name) {
-                    alert("방 제목을 입력해 주십시요.");
-                    return;
-                }
                 alert(this.room_name);
                 /*
                 else {
